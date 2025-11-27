@@ -1,0 +1,30 @@
+```
+Cerevyn Document Intelligence System Architecture
+
++-------------------+     +-------------------+     +-------------------+
+|   User Interface  |     |  PDF Processing   |     |  Text Chunking    |
+|   (Streamlit)     | --> |  (pdfplumber)     | --> |  (LangChain)      |
++-------------------+     +-------------------+     +-------------------+
+         |                           |                           |
+         v                           v                           v
++-------------------+     +-------------------+     +-------------------+
+|  Embeddings       |     |  Vector Store     |     |  Retrieval        |
+|  (HuggingFace)    | --> |  (FAISS)          | <-- |  (Similarity)     |
++-------------------+     +-------------------+     +-------------------+
+         |                           |                           |
+         v                           v                           v
++-------------------+     +-------------------+     +-------------------+
+|  Language Model   |     |  Answer Generation|     |  Output with      |
+|  (GPT-2)          | --> |  (RAG)            | --> |  Page References  |
++-------------------+     +-------------------+     +-------------------+
+
+Data Flow:
+1. User uploads PDF via Streamlit UI
+2. Extract text from PDF pages
+3. Split text into chunks with metadata
+4. Generate embeddings for chunks
+5. Store in FAISS vector database
+6. User query -> embed -> retrieve top chunks
+7. Pass context to LLM for answer
+8. Display answer with source page refs
+```
